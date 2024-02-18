@@ -8,7 +8,7 @@ import com.test.test.repository.Vehiclesrep;
 import com.test.test.service.Vehicleservice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.stream.Collectors;
 import java.util.List;
 
 
@@ -37,7 +37,10 @@ public class Vehiclesserviceimpl  implements Vehicleservice {
 
     @Override
     public List<VehiclesDTO> getAllVehicles() {
-        return null;
+        List<Vehiclesent> vehicles = vehiclesrep.findAll(); // Utilisez une instance de VehiclesRepository
+        return vehicles.stream()
+                .map(Vehiclesmapper::mapToVehiclesDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

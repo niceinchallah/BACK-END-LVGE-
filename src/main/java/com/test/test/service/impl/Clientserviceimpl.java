@@ -8,7 +8,6 @@ import com.test.test.repository.Clientrep;
 import com.test.test.service.Clientservice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,18 +40,19 @@ public class Clientserviceimpl implements Clientservice {
 
     @Override
     public ClientDTO updateClients(Long Clientid, ClientDTO updatedClients) {
-         Client client =    clientrep.findById(Clientid).orElseThrow(()
-        -> new ResourceNOTfoundexception("not exist with givfen id: "+ Clientid)
+        Client client = clientrep.findById(Clientid).orElseThrow(() ->
+                new ResourceNOTfoundexception("not exist with given id: " + Clientid)
         );
         client.setName(updatedClients.getName());
         client.setBrand(updatedClients.getBrand());
         client.setModel(updatedClients.getModel());
         client.setId(updatedClients.getId());
         client.setDate(updatedClients.getDate());
-        client.setPhoto(updatedClients.getPhoto());
-           Client updatedClientObj = clientrep.save(client);
+        client.setPhotoUrl(updatedClients.getPhotoUrl()); // Utilisez setPhotoUrl pour définir l'URL de la photo
+        Client updatedClientObj = clientrep.save(client);
         return Clientmapper.mapToClientDTO(updatedClientObj);
     }
+
 
     @Override
     public void deleteClients(Long Clientid) {

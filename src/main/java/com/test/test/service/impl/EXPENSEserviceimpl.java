@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class EXPENSEserviceimpl implements EXPENSEservice {
@@ -32,7 +32,10 @@ public class EXPENSEserviceimpl implements EXPENSEservice {
 
     @Override
     public List<EXPENSEDTO> getAllEXPENSE() {
-        return null;
+        List<EXPENSE> expenses = expensErep.findAll(); // Utilisez une instance de EXPENSErep
+        return expenses.stream()
+                .map(EXPENSEmapper::mapToEXPENSEDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.test.test.service.Employeservice;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -37,8 +37,12 @@ public class Employeserviceimpl implements Employeservice {
 
     @Override
     public List<EmployeDTO> getAllEmployees() {
-        return null;
+        List<Employeent> allEmployees = employerep.findAll();
+        return allEmployees.stream()
+                .map(Employemapper::mapToEmployeDTO)
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public EmployeDTO updateEmployees(Long Employeid, EmployeDTO updatedEmployees) {

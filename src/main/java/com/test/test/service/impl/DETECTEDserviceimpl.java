@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class DETECTEDserviceimpl  implements DETECTEDservice {
@@ -33,8 +33,12 @@ public class DETECTEDserviceimpl  implements DETECTEDservice {
 
     @Override
     public List<DETECTEDDTO> getAllDETECTED() {
-        return null;
+        List<DETECTED> detectedList = detecteDrep.findAll();
+        return detectedList.stream()
+                .map(DETECTEDmapper::mapToDETECTEDDTO)
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public DETECTEDDTO updateDETECTED(Long DETECTEDid, DETECTEDDTO updatedDETECTED) {

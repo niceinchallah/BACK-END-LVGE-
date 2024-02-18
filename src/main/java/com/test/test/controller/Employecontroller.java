@@ -22,7 +22,7 @@ public class Employecontroller {
         return new ResponseEntity<>(savedEmployees, HttpStatus.CREATED);
     }
     //build get **rest api
-    @GetMapping("id")
+    @GetMapping("{id}")
     public ResponseEntity<EmployeDTO>getEmployebyid(@RequestParam("id") Long Employeid){
         EmployeDTO employeDTO = employeService.getEmployeid(Employeid);
         return ResponseEntity.ok(employeDTO);
@@ -40,9 +40,12 @@ public class Employecontroller {
         return ResponseEntity.ok(employeDTO);
     }
     //BUILD DELETE REST API
-    public ResponseEntity<String> deleteEmployees(Long Employeid){
-        employeService.deleteEmployees(Employeid);
-        return ResponseEntity.ok("deleted succefuly!");
+    // BUILD DELETE REST API
+    @DeleteMapping("{id}")  // Ajoutez l'annotation DeleteMapping et spécifiez le chemin de l'endpoint
+    public ResponseEntity<String> deleteEmployees(@PathVariable Long id) { // Ajoutez @PathVariable pour récupérer l'ID de l'employé à supprimer
+        employeService.deleteEmployees(id);
+        return ResponseEntity.ok("deleted successfully!");
     }
+
 
 }

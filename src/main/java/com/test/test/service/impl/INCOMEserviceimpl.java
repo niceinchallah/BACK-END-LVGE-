@@ -9,7 +9,7 @@ import com.test.test.repository.INCOMErep;
 import com.test.test.service.INCOMEservice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.stream.Collectors;
 import java.util.List;
 
 @Service
@@ -34,7 +34,10 @@ public class INCOMEserviceimpl implements INCOMEservice {
 
     @Override
     public List<INCOMEDTO> getAllINCOMES() {
-        return null;
+        List<INCOME> incomes =incomErep.findAll();
+        return incomes.stream()
+                .map(INCOMEmapper::mapToINCOMEDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

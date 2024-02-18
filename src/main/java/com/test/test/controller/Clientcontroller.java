@@ -43,8 +43,9 @@ public class Clientcontroller {
        return ResponseEntity.ok(clientDTO);
     }
     //BUILD DELETE REST API
-public ResponseEntity<String> deleteClient(Long Clientid){
-        clientservice.deleteClients(Clientid);
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteClient(@PathVariable Long id ){
+        clientservice.deleteClients(id);
         return ResponseEntity.ok("deleted succesufelly.!");
 }
 }

@@ -29,7 +29,7 @@ public class materialcontroller {
 //Build get alll rest api
     @GetMapping
     public  ResponseEntity<List<materialDTO>> getAllmaterials(){
-       List<materialDTO> materials = materialservice.getAllmaterials();
+       List<materialDTO> materials = materialservice.getAllMaterials();
        return ResponseEntity.ok(materials);
     }
 //Build update rest api

@@ -7,7 +7,7 @@ import com.test.test.mapper.materialsmapper;
 import com.test.test.repository.materialrep;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.stream.Collectors;
 import java.util.List;
 
 @Service
@@ -31,9 +31,14 @@ private materialrep materialrep;
         return materialsmapper.mapTomaterialDTO(materialsent);
     }
 
+
+
     @Override
-    public List<materialDTO> getAllmaterials() {
-        return null;
+    public List<materialDTO> getAllMaterials() {
+        List<materialsent> materials = materialrep.findAll();
+        return materials.stream()
+                .map(materialsmapper::mapTomaterialDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -5,7 +5,6 @@ import lombok.Getter;
 import jakarta.persistence.Lob;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDate;
 
 @Getter
@@ -18,15 +17,19 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "brand")
     private String brand;
-    @Column(name="model")
+
+    @Column(name = "model")
     private String model;
+
     @Column(name = "date")
     private LocalDate date;
-    @Lob
-    @Column(name="photo")
-    private byte[] photo;
+
+    @Column(name = "photoUrl") // Utilisation d'une URL pour la photo du client
+    private String photoUrl;
 }

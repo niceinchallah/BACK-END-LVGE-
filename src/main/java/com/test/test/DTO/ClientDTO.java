@@ -17,5 +17,5 @@ public class ClientDTO {
     private String brand;
     private String model;
     private LocalDate date;
-    private byte[] photo;
+    private String photoUrl; // Mettez à jour le nom du champ pour correspondre à l'entité Client
 }

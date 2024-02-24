@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/Employe")
 public class Employecontroller {
-
     @Autowired
     private Employeservice employeService;
     //build add request rest API

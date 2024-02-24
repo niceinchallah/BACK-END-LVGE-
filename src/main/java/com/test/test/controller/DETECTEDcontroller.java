@@ -20,7 +20,7 @@ public class DETECTEDcontroller {
         DETECTEDDTO savedDETECTED = detecteDservice.createDETECTED(detecteddto);
     return new ResponseEntity<>(savedDETECTED, HttpStatus.CREATED);
     }
-    //build get **rest api
+
     @GetMapping("id")
     public ResponseEntity<DETECTEDDTO>getDETECTEDbyid(@RequestParam("id") Long DETECTEDid){
         DETECTEDDTO detecteddto = detecteDservice.getDETECTEDbyid(DETECTEDid);

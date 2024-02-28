@@ -1,12 +1,17 @@
 package com.test.test.controller;
-
 import com.test.test.DTO.ClientDTO;
+import com.test.test.entity.Client;
+import com.test.test.repository.Clientrep;
+
 import com.test.test.service.Clientservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -15,12 +20,52 @@ public class Clientcontroller {
     @Autowired
     private Clientservice clientservice;
 
-    ////build add request rest API
-    @PostMapping
-    public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO clientDTO) {
-        ClientDTO savedClients = clientservice.createClient(clientDTO);
-        return new ResponseEntity<>(savedClients, HttpStatus.CREATED);
+    @Autowired
+    private Clientrep clientrep;
+
+    @PostMapping("/withoutPhoto")
+    public ResponseEntity<?> createClientWithoutPhoto(@RequestParam("name") String name,
+                                                      @RequestParam("brand") String brand,
+                                                      @RequestParam("model") String model) {
+        Client client = new Client();
+        client.setName(name);
+        client.setBrand(brand);
+        client.setModel(model);
+        client = clientrep.save(client);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Client created successfully without photo");
     }
+
+    // Endpoint to create a client with a photo
+    @PostMapping("/withPhoto")
+    public ResponseEntity<?> createClientWithPhoto(@RequestParam("name") String name,
+                                                   @RequestParam("brand") String brand,
+                                                   @RequestParam("model") String model,
+                                                   @RequestParam(value = "photo", required = false) MultipartFile photo) {
+        try {
+            byte[] photoBytes = null; // Initialize to null by default
+
+            // Check if photo is provided and not empty
+            if (photo != null && !photo.isEmpty()) {
+                photoBytes = photo.getBytes();
+
+                // Convert binary data to Base64 string (optional)
+                String base64Photo = Base64.getEncoder().encodeToString(photoBytes);
+            }
+
+            Client client = new Client();
+            client.setName(name);
+            client.setBrand(brand);
+            client.setModel(model);
+            client.setPhoto(photoBytes); // Set photoBytes even if it's null
+            client = clientrep.save(client);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("Client created successfully");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process image");
+        }
+    }
+
 
     //build get **rest api
     @GetMapping("/{id}") // Correction de l'annotation et ajout de l'ID entre accolades
@@ -28,16 +73,13 @@ public class Clientcontroller {
         ClientDTO clientDTO = clientservice.getClientbyid(clientId); // Correction du nom de la méthode
         return ResponseEntity.ok(clientDTO);
     }
-
-
-    //Build get alll rest api
+    //Build get all rest api
     @GetMapping
     public ResponseEntity<List<ClientDTO>> getallClients() {
         List<ClientDTO> clients = clientservice.getAllCients();
         return ResponseEntity.ok(clients);
 
     }
-
     //Build update rest api
     @PutMapping("{id}")
 
@@ -48,8 +90,9 @@ public class Clientcontroller {
     }
 
     //BUILD DELETE REST API
-    public ResponseEntity<String> deleteClient(Long Clientid) {
-        clientservice.deleteClients(Clientid);
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteClient(@PathVariable Long id) {
+        clientservice.deleteClients(id);
         return ResponseEntity.ok("deleted succesufelly.!");
     }
 }

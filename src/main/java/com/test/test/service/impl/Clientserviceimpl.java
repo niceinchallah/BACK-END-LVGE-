@@ -48,7 +48,7 @@ public class Clientserviceimpl implements Clientservice {
         client.setModel(updatedClients.getModel());
         client.setId(updatedClients.getId());
         client.setDate(updatedClients.getDate());
-        client.setPhotoUrl(updatedClients.getPhotoUrl()); // Utilisez setPhotoUrl pour définir l'URL de la photo
+        client.setPhoto(updatedClients.getPhoto());
         Client updatedClientObj = clientrep.save(client);
         return Clientmapper.mapToClientDTO(updatedClientObj);
     }
@@ -56,8 +56,6 @@ public class Clientserviceimpl implements Clientservice {
 
     @Override
     public void deleteClients(Long Clientid) {
-
-
         Client client =    clientrep.findById(Clientid).orElseThrow(()
                 -> new ResourceNOTfoundexception("not exist with givfen id: "+ Clientid)
         );

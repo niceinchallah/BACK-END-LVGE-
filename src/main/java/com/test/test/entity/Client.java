@@ -31,6 +31,7 @@ public class Client {
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "photoUrl") // Utilisation d'une URL pour la photo du client
-    private String photoUrl;
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;  // Mettez à jour le type de données pour stocker l'image en tant que tableau de bytes
 }

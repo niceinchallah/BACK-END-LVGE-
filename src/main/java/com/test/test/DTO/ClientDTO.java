@@ -1,5 +1,4 @@
 package com.test.test.DTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +16,5 @@ public class ClientDTO {
     private String brand;
     private String model;
     private LocalDate date;
-    private String photoUrl; // Mettez à jour le nom du champ pour correspondre à l'entité Client
+    private byte[] photo;  // Mettez à jour le type de données pour stocker l'image en tant que tableau de bytes
 }

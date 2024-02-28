@@ -20,7 +20,7 @@ public class Clientmapper {
                 client.getBrand(),
                 client.getModel(),
                 client.getDate(),
-                client.getPhotoUrl() // Utilisation de l'URL de la photo
+                client.getPhoto()
         );
     }
 
@@ -31,7 +31,7 @@ public class Clientmapper {
                 clientDTO.getBrand(),
                 clientDTO.getModel(),
                 clientDTO.getDate(),
-                null // Pas besoin de mapper la photo ici, car elle est stockée sous forme d'URL
+                clientDTO.getPhoto()
         );
     }
 

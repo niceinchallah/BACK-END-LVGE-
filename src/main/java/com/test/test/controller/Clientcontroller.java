@@ -13,9 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/Clients")
+
 public class Clientcontroller {
     @Autowired
     private Clientservice clientservice;
@@ -81,7 +82,7 @@ public class Clientcontroller {
 
     }
     //Build update rest api
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
 
     public ResponseEntity<ClientDTO> updateClients(@PathVariable("id") Long Clientsid,
                                                    @RequestBody ClientDTO updatedClients) {

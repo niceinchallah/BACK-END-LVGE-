@@ -1,3 +1,5 @@
+package com.test.test;
+
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.annotation.MultipartConfig;

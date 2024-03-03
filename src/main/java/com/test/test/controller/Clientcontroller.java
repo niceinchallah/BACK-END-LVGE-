@@ -50,23 +50,43 @@ public class Clientcontroller {
             if (photo != null && !photo.isEmpty()) {
                 photoBytes = photo.getBytes();
 
-                // Convert binary data to Base64 string (optional)
-                String base64Photo = Base64.getEncoder().encodeToString(photoBytes);
+                // **Temporary Base64 encoding (optional):**
+                // If needed for processing on the server before saving, uncomment this line.
+                // String base64Photo = Base64.getEncoder().encodeToString(photoBytes);
+
+                // Store the original binary data in the database
+                Client client = new Client();
+                client.setName(name);
+                client.setBrand(brand);
+                client.setModel(model);
+                client.setPhoto(photoBytes); // Set photoBytes even if it's null
+                client = clientrep.save(client);
+
+                return ResponseEntity.status(HttpStatus.CREATED).body("Client created successfully");
+            } else {
+                // Handle client creation without photo
+                return createClientWithoutPhoto(name, brand, model);
             }
 
-            Client client = new Client();
-            client.setName(name);
-            client.setBrand(brand);
-            client.setModel(model);
-            client.setPhoto(photoBytes); // Set photoBytes even if it's null
-            client = clientrep.save(client);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body("Client created successfully");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process image");
         }
     }
 
+    @PostMapping
+    public ResponseEntity<?> createClient(@RequestParam("name") String name,
+                                          @RequestParam("brand") String brand,
+                                          @RequestParam("model") String model,
+                                          @RequestParam(value = "photo", required = false) MultipartFile photo) {
+        // Check if photo parameter is present
+        if (photo != null) {
+            // Handle client creation with photo
+            return createClientWithPhoto(name, brand, model, photo);
+        } else {
+            // Handle client creation without photo
+            return createClientWithoutPhoto(name, brand, model);
+        }
+    }
 
     //build get **rest api
     @GetMapping("/{id}") // Correction de l'annotation et ajout de l'ID entre accolades

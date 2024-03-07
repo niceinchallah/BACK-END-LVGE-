@@ -36,8 +36,6 @@ public class Clientcontroller {
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Client created successfully without photo");
     }
-
-    // Endpoint to create a client with a photo
     @PostMapping("/withPhoto")
     public ResponseEntity<?> createClientWithPhoto(@RequestParam("name") String name,
                                                    @RequestParam("brand") String brand,

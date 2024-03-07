@@ -16,5 +16,5 @@ public class ClientDTO {
     private String brand;
     private String model;
     private LocalDate date;
-    private byte[] photo;  // Mettez à jour le type de données pour stocker l'image en tant que tableau de bytes
+    private byte[] photo;
 }
